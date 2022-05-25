@@ -1,0 +1,80 @@
+#!/bin/bash
+
+#####################################
+# Decription: The purpose script file for  user and group management in Linux
+# Name: Kanykei Akmatova
+# Assignment #9 Linux Shell Scripting 2,
+# Kanykei Akmatova, #040968369, 22W_CST8102_450, user_manager, March 21, 2022. 
+# The purpose of script file to create user and group account, make changes and quit using vim. This script file must loop using a while loop
+#####################################
+.  
+choice="n" #initialize to dummy value
+clear
+
+# Repeat until Q or q selected then quit
+while [ $choice != "Q" ] && [ $choice != "q" ]; do
+    echo "Please make your choice in the menu:"
+    echo "  A)  Create a user account"
+    echo "  B)  Delete a user account"
+    echo "  C)  Change supplementary group for a user account"
+    echo "  D)  Change initial group for a user account"
+    echo "  E)  Change default login shell for a user account"
+    echo "  F)  Change account expiration date for a user account"
+    echo "  Q) Quit"
+
+    echo -e "Choice: \c"
+    read choice
+    echo "You Entered $choice."
+
+    if [[ $choice = "A" || $choice = "a" ]]; then
+        # Create the user account based on the given information
+        echo "Create the user account."
+        echo -n "Username: "
+        read user_name
+        echo -n "User’s home directory: "
+        read home_directory
+        echo -n "Default login shell: "
+        read login_shell
+        sudo useradd -m -d "$home_directory" -s "$login_shell" "$user_name" && echo "User account has been created."
+    elif [[ $choice = "B" || $choice = "b" ]]; then
+        # Delete the user account as well as the user’s home directory
+        echo "Delete the user account as well as the user’s home directory."
+        echo -n "Username: "
+        read user_name
+        sudo userdel -r "$user_name" && echo "User account as well as the user’s home directory have been deleted."
+    elif [[ $choice = "C" || $choice = "c" ]]; then
+        # Add a supplementary group for the user account
+        echo "Change a supplementary group for the user account."
+        echo -n "Username: "
+        read user_name
+        echo -n "Group: "
+        read group_name
+        sudo usermod -a -G "$group_name" "$user_name" && echo "The supplementary group for the user account has been added."
+    elif [[ $choice = "D" || $choice = "d" ]]; then
+        # Change the initial group for the user account.
+        echo "Change the initial group for the user account."
+        echo -n "Username: "
+        read user_name
+        echo -n "Group: "
+        read group_name
+        sudo usermod -g "$group_name" "$user_name" && echo "The initial group for the user account have been changed."
+    elif [[ $choice = "E" || $choice = "e" ]]; then
+        # Change the default shell for the user account.
+        echo "Change the default shell for the user account."
+        echo -n "Username: "
+        read user_name
+        echo -n "Shell: "
+        read shell_name
+        sudo usermod -s "$shell_name" "$user_name" && echo "The default shell for the user account has been changed."
+    elif [[ $choice = "F" || $choice = "f" ]]; then
+        # Change the expiration date for the user account.
+        echo "Change the expiration date for the user account."
+        echo -n "Username: "
+        read user_name
+        echo -n "Expiration date: "
+        read expiration_date
+        sudo usermod -e "$expiration_date" "$user_name" && echo "The expiration date for the user account has been changed."
+    fi
+    sleep 3
+    clear
+done

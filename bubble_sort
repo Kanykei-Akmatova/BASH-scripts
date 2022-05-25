@@ -1,0 +1,57 @@
+#!/bin/bash
+
+#####################################
+# Decription: The purpose script file for  user and group management in Linux
+# Name: Kanykei Akmatova
+# Assignment #10 – Linux Shell Scripting 3 (Functions, Loops and Arrays)
+# Kanykei Akmatova, #040968369, 22W_CST8102_450, user_manager, April 3, 2022.
+# Bubble sort.
+#####################################
+
+clear
+n=0
+# 4 and 12 integers in a mixed order.
+echo "Please enter between 4 and 12 integers in a mixed order."
+echo -e "How many integers you want to enter ? "
+read n
+
+while ((n < 4 || n > 12)); do
+    clear
+    echo "Please enter between 4 and 12 integers in a mixed order again."
+    echo -e "How many integers you want to enter ? "
+    read n
+done
+
+# Taking input from user
+echo "Enter integers into array :"
+for ((i = 0; i < $n; i++)); do
+    read nos[$i]
+done
+
+clear
+# Printing the number before sorting
+echo "Integers in an array are:"
+for ((i = 0; i < $n; i++)); do
+    echo -ne ${nos[$i]}
+    echo -ne " "
+done
+
+# Bubble sort
+for ((i = 0; i < $n; i++)); do
+    for ((j = $i; j < $n; j++)); do
+        if [ ${nos[$i]} -gt ${nos[$j]} ]; then
+            t=${nos[$i]}
+            nos[$i]=${nos[$j]}
+            nos[$j]=$t
+        fi
+    done
+done
+
+# Printing integers
+echo -e "\nSorted integers "
+for ((i = 0; i < $n; i++)); do
+    echo -ne ${nos[$i]}
+    echo -ne " "
+done
+
+echo " "
